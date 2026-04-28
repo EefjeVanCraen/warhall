@@ -334,10 +334,14 @@ function registerUser(){
   if(em.indexOf('@')<1){alert('Please enter a valid email');return}
   var col=AVATAR_COLORS[Math.floor(Math.random()*AVATAR_COLORS.length)];
   CU={id:uid(),name:n,role:ro,email:em,color:col,photo:regPD||null};
-  localStorage.setItem('teamCatchup_user',JSON.stringify(CU));load();
-  var ex=false;for(var i=0;i<D.members.length;i++){if(D.members[i].name.toLowerCase()===n.toLowerCase()){ex=true;CU.id=D.members[i].id;D.members[i].photo=CU.photo||D.members[i].photo;D.members[i].role=ro;D.members[i].email=em;localStorage.setItem('teamCatchup_user',JSON.stringify(CU));break}}
-  if(!ex)D.members.push({id:CU.id,name:n,role:ro,email:em,color:col,photo:CU.photo});
-  aH('member','Joined: '+n);save();showApp();
+  localStorage.setItem('teamCatchup_user',JSON.stringify(CU));
+  // Pull remote data first, then merge in this user
+  ghPull().then(function(){
+    load();
+    var ex=false;for(var i=0;i<D.members.length;i++){if(D.members[i].email&&D.members[i].email.toLowerCase()===em.toLowerCase()){ex=true;CU.id=D.members[i].id;D.members[i].photo=CU.photo||D.members[i].photo;D.members[i].role=ro;D.members[i].name=n;localStorage.setItem('teamCatchup_user',JSON.stringify(CU));break}}
+    if(!ex)D.members.push({id:CU.id,name:n,role:ro,email:em,color:col,photo:CU.photo});
+    aH('member','Joined: '+n);save();showApp();
+  });
 }
 function logoutUser(){localStorage.removeItem('teamCatchup_user');CU=null;document.getElementById('appRoot').style.display='none';document.getElementById('welcomeScreen').style.display='flex'}
 function showApp(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('appRoot').style.display='block';rHU();rAll();pA();ghStartPoll()}
