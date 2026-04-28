@@ -234,7 +234,7 @@
   <div class="top-bar">
     <div class="top-bar-left">
       <div style="display:flex;flex-direction:column;align-items:center">
-        <div class="tb-commander" onclick="window.open('warhall/index.html','_blank')"><img src="warhall/commander.jpg" alt="Commander"></div>
+        <div class="tb-commander" onclick="window.open('samshall/index.html','_blank')"><img src="samshall/commander.jpg" alt="Commander"></div>
         <div class="tb-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       </div>
       <div class="tb-divider"></div>
@@ -309,7 +309,7 @@
   </div>
 </div>
 <div class="modal-overlay" id="addWeekModal"><div class="modal"><h3>&#x1F4C5; Add New Week</h3><div style="display:flex;flex-direction:column;gap:.35rem"><label style="font-size:.7rem;font-weight:600">Week Label</label><input type="text" id="newWeekLabel" style="padding:.4rem .55rem;border:1.5px solid var(--g200);border-radius:8px;font-size:.76rem"><label style="font-size:.7rem;font-weight:600;margin-top:.15rem">Date</label><input type="date" id="newWeekDate" style="padding:.4rem .55rem;border:1.5px solid var(--g200);border-radius:8px;font-size:.76rem"></div><div class="modal-actions"><button class="btn btn-ghost" onclick="closeM('addWeekModal')">Cancel</button><button class="btn btn-primary" onclick="addWeek()">Add Week</button></div></div></div>
-<div class="modal-overlay" id="ghSetupModal"><div class="modal"><h3>&#x1F517; Team Sync Setup</h3><p style="font-size:.74rem;color:var(--g600);margin-bottom:.7rem;line-height:1.5">Enter a GitHub Personal Access Token to enable real-time team sync. Create a <b>fine-grained token</b> with <code>Contents: Read &amp; Write</code> permission on the <code>warhall</code> repo. All team members use the same token.</p><div class="wfield"><label>GitHub Token</label><input type="password" id="ghTokenInput" placeholder="github_pat_xxxxxxxxxxxx"></div><div class="modal-actions"><button class="btn btn-ghost" onclick="closeM('ghSetupModal')">Cancel</button><button class="btn btn-primary" onclick="saveGHToken()">&#x1F504; Save &amp; Sync</button></div></div></div>
+<div class="modal-overlay" id="ghSetupModal"><div class="modal"><h3>&#x1F517; Team Sync Setup</h3><p style="font-size:.74rem;color:var(--g600);margin-bottom:.7rem;line-height:1.5">Enter a GitHub Personal Access Token to enable real-time team sync. Create a <b>fine-grained token</b> with <code>Contents: Read &amp; Write</code> permission on the <code>samshall</code> repo. All team members use the same token.</p><div class="wfield"><label>GitHub Token</label><input type="password" id="ghTokenInput" placeholder="github_pat_xxxxxxxxxxxx"></div><div class="modal-actions"><button class="btn btn-ghost" onclick="closeM('ghSetupModal')">Cancel</button><button class="btn btn-primary" onclick="saveGHToken()">&#x1F504; Save &amp; Sync</button></div></div></div>
 
 <div class="share-toast" id="shareToast">✅ Link copied to clipboard!</div>
 <script>
@@ -352,11 +352,11 @@ function defD(){var t=new Date(),wn=getWN(t),wid='w_'+Date.now(),p=new Date(t.ge
 var D;
 
 /* ==================== GITHUB SYNC LAYER ==================== */
-var GH_OWNER='EefjeVanCraen',GH_REPO='warhall',GH_FILE='data/team_catchup.json',GH_BRANCH='main';
+var GH_OWNER='EefjeVanCraen',GH_REPO='samshall',GH_FILE='data/team_catchup.json',GH_BRANCH='main';
 var ghToken=null,ghSha=null,ghSyncing=false,ghPollTimer=null;
 
-function ghGetToken(){if(!ghToken)ghToken=localStorage.getItem('warhall_gh_token');return ghToken}
-function saveGHToken(){var t=document.getElementById('ghTokenInput').value.trim();if(!t){alert('Please enter a token');return}ghToken=t;localStorage.setItem('warhall_gh_token',t);closeM('ghSetupModal');ghPull(true)}
+function ghGetToken(){if(!ghToken)ghToken=localStorage.getItem('samshall_gh_token');return ghToken}
+function saveGHToken(){var t=document.getElementById('ghTokenInput').value.trim();if(!t){alert('Please enter a token');return}ghToken=t;localStorage.setItem('samshall_gh_token',t);closeM('ghSetupModal');ghPull(true)}
 function ghHeaders(){var h={'Accept':'application/vnd.github+json'};var t=ghGetToken();if(t)h['Authorization']='Bearer '+t;return h}
 
 function setSyncStatus(st,label){

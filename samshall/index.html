@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAM'S HALL — Highlights, Actions, Learnings, Lookahead</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:#080808;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Cinzel',serif;overflow:hidden}
+
+.poster{position:relative;width:800px;height:1100px;overflow:hidden;background:#0a0908}
+
+/* Base atmosphere */
+.poster::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,rgba(160,120,40,0.07) 0%,transparent 60%),radial-gradient(ellipse at 50% 85%,rgba(100,15,10,0.08) 0%,transparent 45%),linear-gradient(180deg,#0a0908 0%,#16120d 30%,#0f0c08 70%,#050404 100%);z-index:1}
+
+/* Heavy vignette */
+.poster::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,transparent 25%,rgba(0,0,0,0.88) 100%);z-index:5;pointer-events:none}
+
+/* ===== BORDERS ===== */
+.border-outer{position:absolute;inset:14px;border:1px solid rgba(180,150,80,0.25);z-index:10;pointer-events:none}
+.border-inner{position:absolute;inset:22px;border:1.5px solid rgba(180,150,80,0.12);z-index:10;pointer-events:none}
+
+/* Corners */
+.corner{position:absolute;width:50px;height:50px;z-index:11;pointer-events:none}
+.corner::before,.corner::after{content:'';position:absolute;background:rgba(200,170,80,0.45)}
+.corner-tl{top:18px;left:18px}.corner-tl::before{top:0;left:0;width:28px;height:2px}.corner-tl::after{top:0;left:0;width:2px;height:28px}
+.corner-tr{top:18px;right:18px}.corner-tr::before{top:0;right:0;width:28px;height:2px}.corner-tr::after{top:0;right:0;width:2px;height:28px}
+.corner-bl{bottom:18px;left:18px}.corner-bl::before{bottom:0;left:0;width:28px;height:2px}.corner-bl::after{bottom:0;left:0;width:2px;height:28px}
+.corner-br{bottom:18px;right:18px}.corner-br::before{bottom:0;right:0;width:28px;height:2px}.corner-br::after{bottom:0;right:0;width:2px;height:28px}
+
+/* ===== CROSSED SWORDS ===== */
+.sword{position:absolute;z-index:1;width:3px;height:520px;top:16%;opacity:0.08}
+.sword-l{left:50%;transform:translateX(-50%) rotate(-22deg);background:linear-gradient(to bottom,rgba(200,170,80,0.9),transparent)}
+.sword-r{left:50%;transform:translateX(-50%) rotate(22deg);background:linear-gradient(to bottom,rgba(200,170,80,0.9),transparent)}
+.sword::before{content:'';position:absolute;top:-14px;left:50%;transform:translateX(-50%);border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:18px solid rgba(200,170,80,0.9)}
+
+/* ===== PHOTO ===== */
+.photo-wrap{position:absolute;top:48%;left:50%;transform:translate(-50%,-48%);width:560px;height:680px;z-index:2}
+.photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:saturate(0.35) contrast(1.2) brightness(0.85) sepia(0.3);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 70%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,black 6%,black 70%,transparent 100%)}
+.photo-tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,6,4,0.65) 0%,rgba(130,100,40,0.04) 30%,rgba(100,15,8,0.08) 65%,rgba(8,5,2,0.95) 100%);z-index:3}
+
+/* ===== HEADER ===== */
+.header{position:absolute;top:36px;left:50%;transform:translateX(-50%);z-index:12;text-align:center}
+.header h1{font-family:'Cinzel',serif;font-weight:900;font-size:62px;letter-spacing:18px;text-transform:uppercase;background:linear-gradient(180deg,#ecdcb0 0%,#c9a84c 35%,#8a6e2f 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 2px 10px rgba(180,140,50,0.25));line-height:1}
+.header-line{width:280px;height:1px;margin:10px auto 0;background:linear-gradient(90deg,transparent,rgba(200,170,80,0.55),transparent)}
+
+/* Stars under title */
+.stars{position:absolute;top:96px;left:50%;transform:translateX(-50%);display:flex;gap:16px;z-index:12}
+.stars span{font-size:16px;color:rgba(200,170,80,0.65);text-shadow:0 0 8px rgba(200,170,80,0.2)}
+
+/* ===== BOTTOM SECTION ===== */
+.bottom{position:absolute;bottom:42px;left:50%;transform:translateX(-50%);z-index:12;text-align:center;width:82%}
+.rank{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:9px;color:rgba(200,170,80,0.45);text-transform:uppercase;margin-bottom:10px}
+.name{font-family:'Cinzel',serif;font-weight:700;font-size:28px;letter-spacing:7px;color:rgba(235,215,165,0.88);text-transform:uppercase;text-shadow:0 2px 16px rgba(180,140,50,0.15)}
+.bot-line{width:340px;height:1px;margin:14px auto;background:linear-gradient(90deg,transparent,rgba(200,170,80,0.45),transparent)}
+.slogan{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;letter-spacing:2.5px;color:rgba(195,175,125,0.55);line-height:1.7}
+.slogan b{font-style:normal;color:rgba(225,200,145,0.85);font-weight:700}
+
+/* ===== LAUREL ===== */
+.laurel-l,.laurel-r{position:absolute;bottom:132px;width:36px;height:46px;border:1.5px solid rgba(200,170,80,0.2);z-index:11}
+.laurel-l{left:calc(50% - 52px);border-radius:0 0 0 50%;border-right:none;border-top:none;transform:rotate(-12deg)}
+.laurel-r{right:calc(50% - 52px);border-radius:0 0 50% 0;border-left:none;border-top:none;transform:rotate(12deg)}
+
+/* ===== PARTICLES ===== */
+@keyframes rise{0%,100%{transform:translateY(0);opacity:0}10%{opacity:.45}90%{opacity:0}100%{transform:translateY(-320px)}}
+.p{position:absolute;width:2px;height:2px;background:rgba(200,170,80,0.35);border-radius:50%;z-index:4;animation:rise linear infinite}
+.p:nth-child(1){left:22%;bottom:8%;animation-duration:8s}
+.p:nth-child(2){left:42%;bottom:4%;animation-duration:10s;animation-delay:2s}
+.p:nth-child(3){left:62%;bottom:14%;animation-duration:7s;animation-delay:1s}
+.p:nth-child(4){left:78%;bottom:6%;animation-duration:9s;animation-delay:3s}
+.p:nth-child(5){left:33%;bottom:11%;animation-duration:11s;animation-delay:4s}
+.p:nth-child(6){left:56%;bottom:2%;animation-duration:8.5s;animation-delay:1.5s}
+
+/* Scanlines */
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px);z-index:13;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="poster">
+  <div class="sword sword-l"></div>
+  <div class="sword sword-r"></div>
+  <div class="border-outer"></div>
+  <div class="border-inner"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="header">
+    <h1>SAM'S HALL</h1>
+    <div class="header-line"></div>
+  </div>
+  <div class="stars">
+    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+  </div>
+
+  <div class="photo-wrap">
+    <img src="commander.png" alt="Supreme Commander">
+    <div class="photo-tint"></div>
+  </div>
+
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+
+  <div class="laurel-l"></div>
+  <div class="laurel-r"></div>
+
+  <div class="bottom">
+    <div class="rank">&#9733; Supreme Commander &#9733;</div>
+    <div class="name">General of Strategy</div>
+    <div class="bot-line"></div>
+    <div class="slogan"><b>Sam's HALL</b> &#8212; Highlights, Actions, Learnings, Lookahead</div>
+  </div>
+
+  <div class="scan"></div>
+</div>
+</body>
+</html>
