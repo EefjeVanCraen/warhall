@@ -204,9 +204,13 @@
 .btn-share:hover{opacity:.9}
 .share-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:.6rem 1.2rem;border-radius:10px;font-size:.78rem;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.25);z-index:400;opacity:0;transition:opacity .3s;pointer-events:none}
 .share-toast.show{opacity:1}
-/* Sync indicator */
-.sync-indicator{display:flex;align-items:center;gap:.3rem;font-size:.55rem;font-weight:600;padding:.15rem .4rem;border-radius:6px;color:rgba(255,255,255,.6)}
-.sync-indicator .sync-dot{width:6px;height:6px;border-radius:50%;background:#6CC24A;flex-shrink:0}
+/* Share button */
+.header-share-btn{display:none;align-items:center;gap:.3rem;font-size:.62rem;font-weight:700;padding:.3rem .7rem;border-radius:8px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);cursor:pointer;transition:all .15s;letter-spacing:.02em}
+.header-share-btn:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4)}
+/* Sync indicator (small, bottom-right) */
+.sync-indicator{position:fixed;bottom:.6rem;right:.6rem;display:flex;align-items:center;gap:.25rem;font-size:.5rem;font-weight:600;padding:.15rem .4rem;border-radius:6px;color:var(--g400);background:var(--g50);border:1px solid var(--g200);z-index:300;opacity:.7;transition:opacity .2s}
+.sync-indicator:hover{opacity:1}
+.sync-indicator .sync-dot{width:5px;height:5px;border-radius:50%;background:#6CC24A;flex-shrink:0}
 .sync-indicator.syncing .sync-dot{background:var(--yellow);animation:pulse .8s infinite}
 .sync-indicator.error .sync-dot{background:var(--red)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
@@ -242,7 +246,7 @@
         <div class="slogan">Sam's HALL <span class="slogan-dash">&#8212;</span> <span class="slogan-sub"><span class="hall-h">H</span>ighlights, <span class="hall-a">A</span>ctions, <span class="hall-l">L</span>earnings, <span class="hall-l2">L</span>ookahead</span></div>
       </div>
     </div>
-    <div class="top-bar-right"><div class="sync-indicator" id="syncIndicator"><div class="sync-dot"></div><span id="syncLabel">Synced</span></div><div class="user-pill" onclick="switchTab('settings')" title="My Profile"><div class="up-av" id="headerAv"></div><span id="headerName"></span></div></div>
+    <div class="top-bar-right"><button class="header-share-btn" id="headerShareBtn" onclick="copyShareLink()">🔗 Share</button><div class="user-pill" onclick="switchTab('settings')" title="My Profile"><div class="up-av" id="headerAv"></div><span id="headerName"></span></div></div>
   </div>
   <div class="tabs-bar">
     <div class="tab active" data-tab="catchup" onclick="switchTab('catchup')">&#x1F4AC; Catch-Up</div>
@@ -312,6 +316,7 @@
 <div class="modal-overlay" id="ghSetupModal"><div class="modal"><h3>&#x1F517; Team Sync Setup</h3><p style="font-size:.74rem;color:var(--g600);margin-bottom:.7rem;line-height:1.5">Enter a GitHub Personal Access Token to enable real-time team sync. Create a <b>fine-grained token</b> with <code>Contents: Read &amp; Write</code> permission on the <code>samshall</code> repo. All team members use the same token.</p><div class="wfield"><label>GitHub Token</label><input type="password" id="ghTokenInput" placeholder="github_pat_xxxxxxxxxxxx"></div><div class="modal-actions"><button class="btn btn-ghost" onclick="closeM('ghSetupModal')">Cancel</button><button class="btn btn-primary" onclick="saveGHToken()">&#x1F504; Save &amp; Sync</button></div></div></div>
 
 <div class="share-toast" id="shareToast">✅ Link copied to clipboard!</div>
+<div class="sync-indicator" id="syncIndicator"><div class="sync-dot"></div><span id="syncLabel">Synced</span></div>
 <script>
 var ADMIN_EMAILS=['eefje.vancraen@moodys.com','elie.vancraen@moodys.com','vancraee@moodys.com'];
 function isAdmin(){return CU&&CU.email&&ADMIN_EMAILS.indexOf(CU.email.toLowerCase())>=0}
@@ -559,8 +564,9 @@ function rSet(){
     h+='</span><span style="font-size:.62rem;color:var(--g400)">'+mb.role+'</span><span style="font-size:.58rem;color:var(--g400);margin-left:.2rem">'+esc(mb.email||'')+'</span>';
     if(adm&&!isMe)h+='<button class="btn btn-danger btn-sm" style="margin-left:.2rem" onclick="rM(\''+mb.id+'\')">&times; Remove</button>';
     h+='</div>'}li.innerHTML=h;
-  // Show share section for admins
+  // Show share section + header share button for admins
   var ss=document.getElementById('shareSection');if(ss){ss.style.display=adm?'':'none';var su=document.getElementById('shareUrl');if(su)su.value=window.location.href.split('?')[0].split('#')[0]}
+  var hsb=document.getElementById('headerShareBtn');if(hsb)hsb.style.display=adm?'flex':'none'
 }
 function profSetReadonly(ro){
   var fields=['profName','profRole','profEmail'];
