@@ -392,7 +392,7 @@ function ghPull(showErr){
 }
 
 function ghPush(){
-  if(!ghGetToken()){save();return Promise.resolve()}
+  if(!ghGetToken()){localStorage.setItem('teamCatchup',JSON.stringify(D));return Promise.resolve()}
   setSyncStatus('syncing','Saving...');
   var content=btoa(unescape(encodeURIComponent(JSON.stringify(D,null,2))));
   var body={message:'Update team catchup — '+new Date().toISOString(),content:content,branch:GH_BRANCH};
