@@ -221,7 +221,7 @@
     <div class="sub">Create your profile to join the team</div>
     <div class="avatar-upload" onclick="document.getElementById('regPhoto').click()">
       <div class="av-circle" id="regAvatarPreview">&#x1F4F7;</div>
-      <div class="av-hint">Click to upload photo (optional)</div>
+      <div class="av-hint">Click to upload photo <span class="req">*</span></div>
       <input type="file" id="regPhoto" accept="image/*" style="display:none" onchange="previewRegPhoto(event)">
     </div>
     <div class="wfield"><label>Your Name <span class="req">*</span></label><input type="text" id="regName" placeholder="e.g. Eefje Van Craen"></div>
@@ -333,6 +333,7 @@ function registerUser(){
   var n=document.getElementById('regName').value.trim(),ro=document.getElementById('regRole').value.trim(),em=document.getElementById('regEmail').value.trim();
   if(!n||!ro||!em){alert('Please fill in all required fields');return}
   if(em.indexOf('@')<1){alert('Please enter a valid email');return}
+  if(!regPD){alert('Please upload a profile photo');return}
   var col=AVATAR_COLORS[Math.floor(Math.random()*AVATAR_COLORS.length)];
   CU={id:uid(),name:n,role:ro,email:em,color:col,photo:regPD||null};
   localStorage.setItem('teamCatchup_user',JSON.stringify(CU));
